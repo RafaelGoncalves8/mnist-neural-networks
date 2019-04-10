@@ -101,6 +101,7 @@ def train(model, x_train, y_train, optimizer, criterion, epoch, disp=''):
     if disp=='print':
         print("Train Epoch: {}\tLoss: {:.6f}".format(epoch, loss.item()))
     elif disp=='graph':
+        pass
         
 
 
@@ -117,6 +118,7 @@ def test(model, x_test, y_test, criterion, disp=''):
     if disp=='print':
         print("\nTest set: Average loss: {:.4f}\n".format(test_loss))
     elif disp=='graph':
+        pass
 
 
 # ## Training
@@ -141,7 +143,7 @@ print(model)
 # In[12]:
 
 
-alpha = 0.01
+alpha = 0.006
 gamma = 10
 max_epoch = 100
 optimizer = optim.SGD(model.parameters(), lr=alpha)
@@ -157,19 +159,13 @@ epoch = count = 0
 # In[14]:
 
 
-for epoch in range(100):
-    train(model, X_train, y_train, optimizer, criterion, epoch)
-    test(model, X_test, y_test, criterion)
+for epoch in range(1000):
+    train(model, X_train, y_train, optimizer, criterion, epoch, 'print')
+#    test(model, X_test, y_test, criterion, 'print')
 
 
-# In[ ]:
+# In[15]:
 
 
-
-
-
-# In[ ]:
-
-
-
+test(model, X_test, y_test, criterion, 'print')
 
