@@ -102,6 +102,8 @@ def train(model, x_train, y_train, optimizer, criterion, epoch, disp=''):
         print("Train Epoch: {}\tLoss: {:.6f}".format(epoch, loss.item()))
     elif disp=='graph':
         pass
+    
+    return loss
         
 
 
@@ -119,6 +121,8 @@ def test(model, x_test, y_test, criterion, disp=''):
         print("\nTest set: Average loss: {:.4f}\n".format(test_loss))
     elif disp=='graph':
         pass
+        
+    return test_loss
 
 
 # ## Training
@@ -143,7 +147,7 @@ print(model)
 # In[12]:
 
 
-alpha = 0.006
+alpha = 0.01
 gamma = 10
 max_epoch = 100
 optimizer = optim.SGD(model.parameters(), lr=alpha)
@@ -159,7 +163,7 @@ epoch = count = 0
 # In[14]:
 
 
-for epoch in range(1000):
+for epoch in range(300):
     train(model, X_train, y_train, optimizer, criterion, epoch, 'print')
 #    test(model, X_test, y_test, criterion, 'print')
 
@@ -168,4 +172,44 @@ for epoch in range(1000):
 
 
 test(model, X_test, y_test, criterion, 'print')
+
+
+# In[16]:
+
+
+model = Net(300, 10)
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+min_error = 999
+epoch = count = 0
+train_loss_vec = []
+test_loss_vec = []
+
+while (epoch < 100 and count < 30):
+    train_loss = train(model, X_train, y_train, optimizer, criterion, epoch, '')
+    test_loss = test(model, X_test, y_test, criterion)
+    train_loss_vec.append(train_loss)
+    test_loss_vec.append(test_loss)
+    epoch += 1
+    if test_loss >= min_error:
+        count += 1
+    else:
+        min_error = test_loss
+        
+test(model, X_test, y_test, criterion, 'print')
+
+
+# In[17]:
+
+
+plt.plot(train_loss_vec, "r")
+plt.hold = True
+plt.plot(test_loss_vec, "b")
+plt.hold = False
+plt.show()
+
+
+# In[ ]:
+
+
+
 
