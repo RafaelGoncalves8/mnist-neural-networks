@@ -1,26 +1,25 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[62]:
+# In[1]:
 
 
 import torch
 import torchvision
 import torchvision.datasets as datasets
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
-
 torch.random.seed = 42
 
 import numpy as np
+
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # ## Load the MNIST dataset
 
-# In[63]:
+# In[2]:
 
 
 mnist_trainset = datasets.MNIST(root='../data', train=True, download=True,
@@ -30,7 +29,7 @@ mnist_testset = datasets.MNIST(root='../data', train=False, download=True,
                                transform=None)
 
 
-# In[64]:
+# In[3]:
 
 
 print(mnist_trainset)
@@ -38,43 +37,49 @@ print('')
 print(mnist_testset)
 
 
-# In[74]:
+# In[4]:
 
 
-M = len(mnist_trainset.data[0])
-M
+mnist_trainset.data[0].size()
 
 
-# In[65]:
+# In[5]:
+
+
+size_len = mnist_trainset.data[0].size()[0]
+
+
+# In[6]:
 
 
 fig = plt.figure(1)
-N = 5
-for i, img in enumerate(mnist_trainset.data[0:N]):
+for i, img in enumerate(mnist_trainset.data[0:5]):
     ax = fig.add_subplot(1,5,i+1)
     ax.set_axis_off()
     ax = plt.imshow(img)
 plt.show()
 
 
-# ## Net architecture
+# ## Net architecture and train/test routines
 
-# In[66]:
+# In[7]:
 
 
 class Net(nn.Module):
+    """MLP with 4 ReLU hidden layers and 1 softmax output layer"""
     
-    def __init__(self, M, H, C):
+    def __init__(self, H, C):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(N, H)
+        self.fc1 = nn.Linear(size_len*size_len, H)
         self.fc2 = nn.Linear(H, H)
         self.fc3 = nn.Linear(H, H)
         self.fc4 = nn.Linear(H, C)
         self.fc5 = nn.Linear(C, 1)
         self.relu = nn.ReLU()
-        self.softmax = nn.Softmax()
+        self.softmax = nn.LogSoftmax()
         
     def forward(self, x):
+        x = x.view(-1, size_len*size_len)
         x = self.relu(self.fc1(x))
         x = self.relu(self.fc2(x))
         x = self.relu(self.fc3(x))
@@ -83,41 +88,95 @@ class Net(nn.Module):
         return x
 
 
-# In[76]:
+# In[8]:
 
 
-model = Net(M, 10, 10)
+def train(model, x_train, y_train, optimizer, criterion, epoch):
+    model.train()
+    
+    optimizer.zero_grad()
+    output = model(x_train)
+    y_pred = output
+    loss = criterion(y_pred, y_train)
+    loss.backward()
+    optimizer.step()
+    
+    print("Train Epoch: {}\tLoss: {:.6f}".format(epoch, loss.item()))
+
+
+# In[9]:
+
+
+def test(model, x_test, y_test, criterion):
+    model.eval()
+
+    with torch.no_grad():
+        output = model(x_test)
+        y_pred = output
+        test_loss = criterion(y_pred, y_train)
+
+    print("\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(test_loss))
+
+
+# ## Training
+
+# In[10]:
+
+
+X_train = mnist_trainset.data.float()
+y_train = mnist_trainset.targets
+
+X_test = mnist_testset.data.float()
+y_test = mnist_testset.targets
+
+
+# In[11]:
+
+
+model = Net(100, 10)
 print(model)
 
 
-# In[78]:
+# In[12]:
 
 
 alpha = 0.1
-
-
-# In[80]:
-
-
+gamma = 10
+max_epoch = 100
 optimizer = optim.SGD(model.parameters(), lr=alpha)
-
-criterion = torch.nn.CrossEntropyLoss()
-
-
-# In[81]:
+criterion = torch.nn.NLLLoss()
 
 
-x = mnist_trainset.data
+# In[13]:
 
 
-# In[82]:
+epoch = count = 0
 
 
-optimizer.zero_grad()
-output = model(x)
-loss = criterion(output, target)
-loss.backward()
-optimizer.step()
+# In[14]:
+
+
+for epoch in range(100):
+    train(model, X_train, y_train, optimizer, criterion, epoch)
+    test(model, X_test, y_test, criterion)
+
+
+# In[ ]:
+
+
+X_train
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
