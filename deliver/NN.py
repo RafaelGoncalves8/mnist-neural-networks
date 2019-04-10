@@ -66,7 +66,7 @@ plt.show()
 
 
 class Net(nn.Module):
-    """MLP with 4 ReLU hidden layers and 1 softmax output layer"""
+    """MLP with 3 ReLU hidden layers and 1 softmax output layer"""
     
     def __init__(self, H, C):
         super(Net, self).__init__()
@@ -74,24 +74,22 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(H, H)
         self.fc3 = nn.Linear(H, H)
         self.fc4 = nn.Linear(H, C)
-        self.fc5 = nn.Linear(C, 1)
         self.relu = nn.ReLU()
-        self.softmax = nn.LogSoftmax()
+        self.softmax = nn.LogSoftmax(dim=1)
         
     def forward(self, x):
         x = x.view(-1, size_len*size_len)
         x = self.relu(self.fc1(x))
         x = self.relu(self.fc2(x))
         x = self.relu(self.fc3(x))
-        x = self.relu(self.fc4(x))
-        x = self.softmax(self.fc5(x))
+        x = self.softmax(self.fc4(x))
         return x
 
 
 # In[8]:
 
 
-def train(model, x_train, y_train, optimizer, criterion, epoch):
+def train(model, x_train, y_train, optimizer, criterion, epoch, disp=''):
     model.train()
     
     optimizer.zero_grad()
@@ -100,20 +98,25 @@ def train(model, x_train, y_train, optimizer, criterion, epoch):
     loss.backward()
     optimizer.step()
     
-    print("Train Epoch: {}\tLoss: {:.6f}".format(epoch, loss.item()))
+    if disp=='print':
+        print("Train Epoch: {}\tLoss: {:.6f}".format(epoch, loss.item()))
+    elif disp=='graph':
+        
 
 
 # In[9]:
 
 
-def test(model, x_test, y_test, criterion):
+def test(model, x_test, y_test, criterion, disp=''):
     model.eval()
 
     with torch.no_grad():
         output = model(x_test)
-        test_loss = criterion(output, y_train)
+        test_loss = criterion(output, y_test)
 
-    print("\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(test_loss))
+    if disp=='print':
+        print("\nTest set: Average loss: {:.4f}\n".format(test_loss))
+    elif disp=='graph':
 
 
 # ## Training
@@ -138,7 +141,7 @@ print(model)
 # In[12]:
 
 
-alpha = 0.1
+alpha = 0.01
 gamma = 10
 max_epoch = 100
 optimizer = optim.SGD(model.parameters(), lr=alpha)
