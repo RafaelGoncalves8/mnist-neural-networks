@@ -96,8 +96,7 @@ def train(model, x_train, y_train, optimizer, criterion, epoch):
     
     optimizer.zero_grad()
     output = model(x_train)
-    y_pred = output
-    loss = criterion(y_pred, y_train)
+    loss = criterion(output, y_train)
     loss.backward()
     optimizer.step()
     
@@ -112,8 +111,7 @@ def test(model, x_test, y_test, criterion):
 
     with torch.no_grad():
         output = model(x_test)
-        y_pred = output
-        test_loss = criterion(y_pred, y_train)
+        test_loss = criterion(output, y_train)
 
     print("\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(test_loss))
 
@@ -159,18 +157,6 @@ epoch = count = 0
 for epoch in range(100):
     train(model, X_train, y_train, optimizer, criterion, epoch)
     test(model, X_test, y_test, criterion)
-
-
-# In[ ]:
-
-
-X_train
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
