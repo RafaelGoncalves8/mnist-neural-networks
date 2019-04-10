@@ -185,7 +185,6 @@ for O in [10, 30, 80, 150]:
         (a, b) = batch_train(net, X_train, y_train, X_test, y_test,
                             alpha, epsilon, gamma, max_iter)
         
-        print("O: ", O, "alpha:", alpha)
         print("MSE_train:", np.min(a), "MSE_test:", np.min(b))
         plt.plot(a, "r")
         plt.hold = True

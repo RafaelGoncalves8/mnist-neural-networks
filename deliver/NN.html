@@ -13115,7 +13115,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -13132,37 +13132,6 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1.0.1.post2
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13172,131 +13141,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">mnist_trainset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../data&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                 <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz to ../data/MNIST/raw/train-images-idx3-ubyte.gz
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>100.1%</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Extracting ../data/MNIST/raw/train-images-idx3-ubyte.gz
-Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz to ../data/MNIST/raw/train-labels-idx1-ubyte.gz
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>113.5%</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Extracting ../data/MNIST/raw/train-labels-idx1-ubyte.gz
-Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz to ../data/MNIST/raw/t10k-images-idx3-ubyte.gz
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>100.4%</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Extracting ../data/MNIST/raw/t10k-images-idx3-ubyte.gz
-Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz to ../data/MNIST/raw/t10k-labels-idx1-ubyte.gz
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>180.4%</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Extracting ../data/MNIST/raw/t10k-labels-idx1-ubyte.gz
-Processing...
-Done!
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mnist_testset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../data&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="n">mnist_testset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../data&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 
@@ -13307,10 +13158,12 @@ Done!
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">mnist_trainset</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">mnist_testset</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mnist_trainset</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mnist_testset</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13323,13 +13176,64 @@ Done!
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Dataset MNIST
+    Number of datapoints: 60000
+    Split: train
+    Root Location: ../data
+    Transforms (if any): None
+    Target Transforms (if any): None
+
+Dataset MNIST
+    Number of datapoints: 10000
+    Split: test
+    Root Location: ../data
+    Transforms (if any): None
+    Target Transforms (if any): None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mnist_trainset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">]):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
 
 
 
 
-<div class="output_text output_subarea output_execute_result">
-<pre>(60000, 10000)</pre>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
 </div>
 
 </div>

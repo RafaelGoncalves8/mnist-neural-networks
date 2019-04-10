@@ -3,7 +3,7 @@
 
 # # PyTorch
 
-# In[38]:
+# In[1]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
@@ -22,7 +22,7 @@ import torchvision.transforms as transforms
 
 # ## Basic
 
-# In[3]:
+# In[2]:
 
 
 x = torch.empty(5, 3)
@@ -80,27 +80,27 @@ print(b)
 
 # ### Tensor
 
-# In[5]:
+# In[3]:
 
 
 x = torch.ones(2, 2, requires_grad=True)
 print(x)
 
 
-# In[6]:
+# In[4]:
 
 
 y = x + 2
 print(y)
 
 
-# In[7]:
+# In[5]:
 
 
 print(y.grad_fn)
 
 
-# In[8]:
+# In[6]:
 
 
 z = y * y * 3
@@ -108,7 +108,7 @@ out = z.mean()
 print(z, out)
 
 
-# In[9]:
+# In[7]:
 
 
 a = torch.randn(2, 2)
@@ -122,19 +122,19 @@ print(b.grad_fn)
 
 # ### Gradients
 
-# In[10]:
+# In[8]:
 
 
 out.backward()
 
 
-# In[11]:
+# In[9]:
 
 
 print(x.grad) # grad out in respect with x (d_out/d_xi)
 
 
-# In[13]:
+# In[10]:
 
 
 x = torch.randn(3, requires_grad=True)
@@ -146,7 +146,7 @@ while y.data.norm() < 1000:
 print(y)
 
 
-# In[14]:
+# In[11]:
 
 
 v = torch.tensor([0.1, 1.0, 0.0001], dtype=torch.float)
@@ -155,7 +155,7 @@ y.backward(v)
 print(x.grad) # gradient of y in respect to x ? why v ?
 
 
-# In[15]:
+# In[12]:
 
 
 print(x.requires_grad)
@@ -169,7 +169,7 @@ with torch.no_grad():
 
 # ### Model
 
-# In[21]:
+# In[13]:
 
 
 class Net(nn.Module):
@@ -206,7 +206,7 @@ net = Net()
 print(net)
 
 
-# In[22]:
+# In[14]:
 
 
 params = list(net.parameters())
@@ -214,7 +214,7 @@ print(len(params))
 print(params[0].size()) # conv1's .weight
 
 
-# In[23]:
+# In[15]:
 
 
 input = torch.randn(1, 1, 32, 32)
@@ -222,7 +222,7 @@ out = net(input)
 print(out)
 
 
-# In[25]:
+# In[16]:
 
 
 net.zero_grad()
@@ -231,7 +231,7 @@ out.backward(torch.randn(1,10))
 
 # ### Loss function
 
-# In[26]:
+# In[17]:
 
 
 output = net(input)
@@ -243,7 +243,7 @@ loss = criterion(output, target)
 print(loss)
 
 
-# In[27]:
+# In[18]:
 
 
 print(loss.grad_fn)
@@ -253,7 +253,7 @@ print(loss.grad_fn.next_functions[0][0].next_functions[0][0])
 
 # ### Backprop
 
-# In[28]:
+# In[19]:
 
 
 net.zero_grad()
@@ -269,7 +269,7 @@ print(net.conv1.bias.grad)
 
 # ### Update the weights
 
-# In[29]:
+# In[20]:
 
 
 learning_rate = 0.01
@@ -277,7 +277,7 @@ for f in net.parameters():
     f.data.sub_(f.grad.data * learning_rate)
 
 
-# In[32]:
+# In[21]:
 
 
 optimizer = optim.SGD(net.parameters(), lr=0.01)
@@ -292,21 +292,21 @@ optimizer.step()
 
 # ## Training a Classifier
 
-# In[37]:
+# In[23]:
 
 
 transform = transforms.Compose([transforms.ToTensor(),
                                transforms.Normalize((0.5, 0.5, 0.5),
                                                    (0.5, 0.5, 0.5))])
 
-trainset = torchvision.datasets.CIFAR10(root='./data',
+trainset = torchvision.datasets.CIFAR10(root='../data',
                                        train=True,
                                        download=True,
                                        transform=transform)
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,
                                      shuffle=True, num_workers=2)
 
-testset = torchvision.datasets.CIFAR10(root='./data',
+testset = torchvision.datasets.CIFAR10(root='../data',
                                       train=False,
                                       download=True,
                                       transform=transform)
@@ -317,7 +317,7 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=4,
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
 
-# In[40]:
+# In[24]:
 
 
 def imshow(img):
