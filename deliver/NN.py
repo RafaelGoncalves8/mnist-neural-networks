@@ -208,8 +208,16 @@ plt.hold = False
 plt.show()
 
 
-# In[ ]:
+# In[25]:
 
 
-
+fig = plt.figure(1)
+for i, img in enumerate(X_test[:10]):
+    ax = fig.add_subplot(1,10,i+1)
+    ax.set_axis_off()
+    ax = plt.imshow(img)
+    with torch.no_grad():
+        a = model(img)
+    print(mnist_testset.classes[torch.argmax(a, dim=1)])
+plt.show()
 
