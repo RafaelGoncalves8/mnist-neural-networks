@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[45]:
+# In[1]:
 
 
 import torch
@@ -24,17 +24,17 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 
 # # Configs
 
-# In[3]:
+# In[2]:
 
 
 batch_size_train = 64
 batch_size_test = 1000
 learning_rate = 0.01
-n_epochs = 3
+n_epochs = 5
 log_interval = 10
 
 
-# In[46]:
+# In[3]:
 
 
 data_dir = os.path.abspath(os.path.relpath('../data'))
@@ -122,7 +122,7 @@ def train(epoch, net, optimizer, train_loader, v=1, track=0):
 #         torch.save(optimizer.state_dict(), 'optimizer.pth')
 
 
-# In[30]:
+# In[10]:
 
 
 def test(net, optimizer, test_loader, v=1, track=0):
@@ -145,7 +145,7 @@ def test(net, optimizer, test_loader, v=1, track=0):
     return test_loss, correct.item()/len(test_loader.dataset)
 
 
-# In[42]:
+# In[11]:
 
 
 def kfold(k, N, epochs, model, optimizer, state_dict, train_loader):
@@ -189,7 +189,7 @@ def kfold(k, N, epochs, model, optimizer, state_dict, train_loader):
 
 # ## MLP
 
-# In[36]:
+# In[12]:
 
 
 class MLP(nn.Module):
@@ -219,7 +219,7 @@ class MLP(nn.Module):
 
 # ## CNN
 
-# In[37]:
+# In[13]:
 
 
 class CNN(nn.Module):
@@ -247,7 +247,7 @@ class CNN(nn.Module):
 
 # # MLP
 
-# In[40]:
+# In[14]:
 
 
 models = []
@@ -262,16 +262,15 @@ for H in [30, 60, 100, 300, 600]:
         models.append((H, D, loss, acc)) 
 
 
-# In[41]:
+# In[15]:
 
 
 models
 
 
-# In[43]:
+# In[16]:
 
 
-n_epochs = 5
 mlp = MLP(300, 0)
 optimizer = optim.Adam(mlp.parameters(), lr=learning_rate)
 train_losses = []
@@ -280,7 +279,7 @@ test_losses = []
 test_counter = [i*len(train_loader.dataset) for i in range(n_epochs + 1)]
 
 
-# In[44]:
+# In[17]:
 
 
 test(mlp, optimizer, test_loader, v=1, track=1)
@@ -289,7 +288,7 @@ for epoch in range(1, n_epochs + 1):
     test(mlp, optimizer, test_loader, v=1, track=1)
 
 
-# In[47]:
+# In[18]:
 
 
 fig = plt.figure()
@@ -304,7 +303,7 @@ plt.show()
 
 # # CNN
 
-# In[48]:
+# In[19]:
 
 
 models_cnn = []
@@ -318,17 +317,23 @@ for D in [0, 0.3, 0.5]:
     models_cnn.append((D, loss, acc)) 
 
 
-# In[49]:
+# In[20]:
 
 
 models_cnn
 
 
-# In[53]:
+# In[21]:
+
+
+train_losses_mlp = train_losses[:]
+test_losses_mlp = test_losses[:]
+
+
+# In[22]:
 
 
 cnn = CNN(0)
-n_epochs = 5
 optimizer = optim.Adam(cnn.parameters(), lr=learning_rate)
 train_losses = []
 train_counter = []
@@ -336,7 +341,7 @@ test_losses = []
 test_counter = [i*len(train_loader.dataset) for i in range(n_epochs + 1)]
 
 
-# In[54]:
+# In[23]:
 
 
 test(cnn, optimizer, test_loader, v=1, track=1)
@@ -345,7 +350,7 @@ for epoch in range(1, n_epochs + 1):
     test(cnn, optimizer, test_loader, v=1, track=1)
 
 
-# In[55]:
+# In[24]:
 
 
 fig = plt.figure()
@@ -358,8 +363,26 @@ plt.savefig(os.path.join(image_dir, 'cnn.png'), bbox_inches='tight')
 plt.show()
 
 
-# In[ ]:
+# In[25]:
 
 
+fig = plt.figure()
 
+plt.subplot(1,2,1)
+plt.plot(train_counter, train_losses_mlp, color='blue', zorder=1)
+plt.scatter(test_counter, test_losses_mlp, color='red', zorder=2)
+plt.legend(['Train Loss', 'Test Loss'], loc='upper right')
+plt.xlabel('number of training examples seen')
+plt.ylabel('negative log likelihood loss')
+plt.title('MLP')
+
+plt.subplot(1,2,2)
+plt.plot(train_counter, train_losses, color='blue', zorder=1)
+plt.scatter(test_counter, test_losses, color='red', zorder=2)
+plt.legend(['Train Loss', 'Test Loss'], loc='upper right')
+plt.xlabel('number of training examples seen')
+plt.ylabel('negative log likelihood loss')
+plt.title('CNN')
+
+plt.savefig(os.path.join(image_dir, 'learning_curves.png'), bbox_inches='tight')
 
