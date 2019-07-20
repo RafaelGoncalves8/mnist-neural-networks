@@ -153,6 +153,7 @@ def kfold(k, N, epochs, model, optimizer, state_dict, train_loader):
     acc_avg = 0
     for i in range(k):
         model.load_state_dict(state_dict)
+        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
         epoch = 0
         count = 0
         min_error = 100
@@ -168,7 +169,7 @@ def kfold(k, N, epochs, model, optimizer, state_dict, train_loader):
         X_val = torch.utils.data.Subset(train_loader.dataset, val_mask)
         X_train_l = torch.utils.data.DataLoader(X_train, batch_size_train, True)
         X_val_l = torch.utils.data.DataLoader(X_val, batch_size_test, True)
-        while (epoch < epochs and count < 1):
+        while (epoch < epochs and count < 2):
             train(epoch, model, optimizer, X_train_l, 0)
             test_loss, test_acc = test(model, optimizer, X_val_l, 0)
             epoch += 1
@@ -257,7 +258,7 @@ for H in [30, 60, 100, 300, 600]:
         copy = MLP(H, D)
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
         print('D =', D, 'H =', H)
-        loss, acc = kfold(3, 60000, 3, model, optimizer, copy.state_dict(), train_loader)
+        loss, acc = kfold(5, 60000, 5, model, optimizer, copy.state_dict(), train_loader)
         print()
         models.append((H, D, loss, acc)) 
 
@@ -271,7 +272,8 @@ models
 # In[16]:
 
 
-mlp = MLP(300, 0)
+mlp = MLP(100, 0)
+n_epochs = 10
 optimizer = optim.Adam(mlp.parameters(), lr=learning_rate)
 train_losses = []
 train_counter = []
@@ -312,7 +314,7 @@ for D in [0, 0.3, 0.5]:
     copy = CNN(D)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     print('D =', D)
-    loss, acc = kfold(3, 60000, 3, model, optimizer, copy.state_dict(), train_loader)
+    loss, acc = kfold(5, 60000, 5, model, optimizer, copy.state_dict(), train_loader)
     print()
     models_cnn.append((D, loss, acc)) 
 
@@ -333,7 +335,8 @@ test_losses_mlp = test_losses[:]
 # In[22]:
 
 
-cnn = CNN(0)
+cnn = CNN(0.3)
+n_epochs = 10
 optimizer = optim.Adam(cnn.parameters(), lr=learning_rate)
 train_losses = []
 train_counter = []
@@ -385,4 +388,16 @@ plt.ylabel('negative log likelihood loss')
 plt.title('CNN')
 
 plt.savefig(os.path.join(image_dir, 'learning_curves.png'), bbox_inches='tight')
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
