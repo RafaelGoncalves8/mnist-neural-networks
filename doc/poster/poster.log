@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.9.25)  25 SEP 2019 21:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.9.25)  25 SEP 2019 21:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1765,6 +1765,19 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
+
+! Package xcolor Error: Undefined color `indigo'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.154 ...de dígitos escritos a mão ~\cite{mnist}
+                                                  . O modelo final de rede c...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no c in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no n in font nullfont!
@@ -1777,9 +1790,9 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
 LaTeX Font Info:    Font shape `T1/pag/m/it' in size <29.86> not available
-(Font)              Font shape `T1/pag/m/sl' tried instead on input line 167.
+(Font)              Font shape `T1/pag/m/sl' tried instead on input line 178.
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 26.87381pt on input line 172.
+(Font)              scaled to size 26.87381pt on input line 183.
 
 ! Package xcolor Error: Undefined color `indigo'.
 
@@ -1787,7 +1800,7 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.172 ...   \url{http://yann.lecun.com/exdb/mnist}
+l.183 ...   \url{http://yann.lecun.com/exdb/mnist}
                                                   .
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1799,7 +1812,7 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.177 ...s://github.com/RafaelGoncalves8/mnist_nn}
+l.188 ...s://github.com/RafaelGoncalves8/mnist_nn}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1811,7 +1824,7 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.182         \url{http://alexlenail.me/NN-SVG/}
+l.193         \url{http://alexlenail.me/NN-SVG/}
                                                 .
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1823,18 +1836,18 @@ Non-PDF special ignored!
 Non-PDF special ignored!
 <special> papersize=83.96cm,118.82cm
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./unicamp.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 189.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 200.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 200.
  (./poster.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 200.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 200.
 Package rerunfilecheck Info: File `poster.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
  38210 strings out of 492623
  750056 string characters out of 6135669
- 1127590 words of memory out of 5000000
+ 1142262 words of memory out of 5000000
  41490 multiletter control sequences out of 15000+600000
  611181 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1848,10 +1861,10 @@ Regular.pfb></usr/share/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/sha
 re/texmf-dist/fonts/type1/urw/avantgar/uagd8a.pfb></usr/share/texmf-dist/fonts/
 type1/urw/avantgar/uagk8a.pfb></usr/share/texmf-dist/fonts/type1/urw/avantgar/u
 agko8a.pfb></usr/share/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on poster.pdf (1 page, 172379 bytes).
+Output written on poster.pdf (1 page, 175639 bytes).
 PDF statistics:
- 112 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
+ 113 PDF objects out of 1000 (max. 8388607)
+ 76 compressed objects within 1 object stream
  11 named destinations out of 1000 (max. 500000)
  178 words of extra memory for PDF output out of 10000 (max. 10000000)
 
