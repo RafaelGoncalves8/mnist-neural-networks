@@ -1,0 +1,189 @@
+\documentclass[a0,portrait]{a0poster}
+% \documentclass[9pt]{article}
+
+\usepackage[scaled]{beramono} 
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{epstopdf}
+\usepackage[portuges]{babel}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage{graphicx, url, float, booktabs, datetime, multicol}
+\usepackage{lipsum, cite, wrapfig}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[ruled]{algorithm2e}
+\usepackage[super]{nth}
+\usepackage[hang]{subfig}
+\usepackage[svgnames]{xcolor} % Specify colors by their 'svgnames', for a full list of all colors available see here: http://www.latextemplates.com/svgnames-colors
+\usepackage[
+    breaklinks=true,    
+    allbordercolors=indigo,
+%    ocgcolorlinks=true,
+    colorlinks=true,
+    anchorcolor=indigo, 
+    citecolor=indigo,
+    filecolor=indigo,
+    linkcolor=indigo,
+    menucolor=indigo,
+    runcolor=indigo,
+    urlcolor=indigo,
+    linktoc=all
+]{hyperref}
+\usepackage[ocgcolorlinks]{ocgx2}
+
+\usepackage{pgf}
+\usepackage{pgfpages}
+
+\pgfpagesdeclarelayout{boxed}
+{
+  \edef\pgfpageoptionborder{0pt}
+}
+{
+  \pgfpagesphysicalpageoptions
+  {%
+    logical pages=1,%
+  }
+  \pgfpageslogicalpageoptions{1}
+  {
+      border code=\pgfsetlinewidth{4pt}\color{Indigo}\pgfstroke,%
+    border shrink=\pgfpageoptionborder,%
+    resized width=.95\pgfphysicalwidth,%
+    resized height=.95\pgfphysicalheight,%
+    center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+}
+
+\pgfpagesuselayout{boxed}
+
+\columnsep=100pt
+\columnseprule=4pt
+
+\usepackage{sectsty}
+% \sectionfont{\color{Indigo}\Huge}
+%  \sectionfont{centering\Huge}
+
+\usepackage[most]{tcolorbox}
+
+\tcbset{
+    frame code={}
+    center title,
+    left=0pt,
+    right=0pt,
+    top=0pt,
+    bottom=0pt,
+    colback=Indigo!10,
+    colframe=black,
+    width=\dimexpr\linewidth\relax,
+    enlarge left by=0mm,
+    boxsep=3pt,
+    arc=0pt,outer arc=0pt,
+    }
+
+
+
+\usepackage[T1]{fontenc}
+\usepackage[tabular,lining]{montserrat}
+\newcommand*{\headingfont}{\fontfamily{Montserrat-TOsF}\selectfont}
+\usepackage{avant}
+\renewcommand{\familydefault}{\sfdefault}
+
+\setlength\parindent{5cm}
+
+\begin{document}
+
+    \noindent
+\begin{minipage}{0.73\linewidth}
+    \headingfont
+\veryHuge \color{Indigo} \textbf{Fundamentos de Redes Neurais Profundas:}\\ \color{Black}
+\Huge\textit{Abordagem Baseada em Redes Convolucionais.}\\[1cm] % Subtitle
+\huge \textbf{Rafael Gonçalves \& Romis Attux.}\\[0.2cm] % Author(s)
+    {\LARGE Faculdade de Engenharia Elétrica e de Computação - Unicamp\\
+    \texttt{r186062@dac.unicamp.br, attux@dca.fee.unicamp.br}}
+\end{minipage}
+%
+\begin{minipage}{0.27\linewidth}
+    \centering
+    \vspace{2cm}
+    \def\svgwidth{0.6\columnwidth}
+    \input{unicamp.pdf_tex}
+    \break\hfill\break
+\end{minipage}
+
+\vspace{1cm} % A bit of extra whitespace between the header and poster content
+
+\begin{multicols}{2}
+
+    \section*{\begin{tcolorbox}
+        \huge
+        \headingfont
+        \centering
+        Introdução
+    \end{tcolorbox}}
+    {\Large
+
+    Redes neurais artificiais são sistemas de computação não lineares e adaptativos originalmente inspirados nas redes neurais biológicas presentes no sistema nervoso dos animais.
+    Especialmente com o advento de redes neurais profundas e o conceito de aprendizado profundo, este se tornou um importante paradigma dentro do campo de aprendizado de máquina e é amplamente utilizado para resolver uma variedade de problemas atuais.
+
+    Neste contexto, esta pesquisa buscou estudar teoricamente redes neurais profundas baseado em um livro recente e representativo ~\cite{Goodfellow16} e posteriormente aplicar um modelo específico de rede neural -- a saber uma rede convolucional -- ao problema conhecido de reconhecimento de dígitos escritos à mão utilizando a base de dados MNIST ~\cite{mnist}.
+
+    }
+    \section*{\begin{tcolorbox}
+        \huge
+        \headingfont
+        \centering
+        Discussões e Resultados
+    \end{tcolorbox}}
+    {\Large
+    \lipsum[2]
+
+    }
+    \section*{\begin{tcolorbox}
+        \huge
+        \headingfont
+        \centering
+        Conclusões
+    \end{tcolorbox}}
+    {\Large
+    \lipsum[3]
+
+    }
+    \section*{\begin{tcolorbox}
+        \huge
+        \headingfont
+        \centering
+        Agradecimentos
+    \end{tcolorbox}}
+    {\Large
+
+    O estudante gostaria de expressar seu agradecimento ao programa PIBIC/CNPq/Unicamp pelo auxílio financeiro e em especial ao Prof. Romis Attux por todo o incentivo e apoio durante o desenvolvimento da pesquisa.
+
+    }
+
+    \rule{.33\linewidth}{2pt}
+
+{\large
+\begin{thebibliography}{9}
+    \bibitem{Goodfellow16}
+        I. Goodfellow, Y. Bengio, A. Courville.
+        \textit{Deep Learning}.
+        MIT Press, 2016.
+    \bibitem{mnist}
+        Y. LeCun.
+        \textit{The MNIST Database of Handwritten Digits}.
+        \url{http://yann.lecun.com/exdb/mnist}.
+        (acessado em 07/07/2019).
+    \bibitem{github}
+        R. Gonçalves.
+        \textit{mnist\_nn}.
+        \url{https://github.com/RafaelGoncalves8/mnist_nn}
+        (acessado em 20/07/2019).
+    \bibitem{nnsvg}
+        LeNail.
+        \textit{NN-SVG: Publication-Ready Neural Network Architecture Schematics}.
+        \url{http://alexlenail.me/NN-SVG/}.
+        Journal of Open Source Software, 2019.
+        (acessado em 20/07/2019).
+\end{thebibliography}
+}
+\end{multicols}
+
+\end{document}
