@@ -77,7 +77,6 @@
     arc=0pt,outer arc=0pt,
     }
 
-
 \usepackage{tikz}
     \usetikzlibrary{positioning}
     \usetikzlibrary{arrows}
@@ -98,8 +97,8 @@
 \begin{minipage}{0.73\linewidth}
     % \headingfont
 \veryHuge \color{Indigo} \textbf{Fundamentos de Redes Neurais Profundas:}\\ \color{Black}
-\Huge\textit{Abordagem Baseada em Redes Convolucionais.}\\[1cm] % Subtitle
-\huge \textbf{Rafael Gonçalves \& Romis Attux.}\\[0.2cm] % Author(s)
+\LARGE\textit{Abordagem Baseada em Redes Convolucionais.}\\[1cm] % Subtitle
+\LARGE \textbf{Rafael Gonçalves \& Romis Attux.}\\[0.2cm] % Author(s)
     {\LARGE Faculdade de Engenharia Elétrica e de Computação - Unicamp\\
     \texttt{r186062@dac.unicamp.br, attux@dca.fee.unicamp.br}}
 \end{minipage}
@@ -116,15 +115,15 @@
 
 \begin{multicols}{2}
 
-\onehalfspacing
+% \onehalfspacing
     \section*{\begin{tcolorbox}
-        \huge
+        \LARGE
         % \headingfont
         \centering
         Introdução
     \end{tcolorbox}}
 
-\Large
+\large
 
     Redes neurais artificiais são sistemas de computação não lineares e adaptativos originalmente inspirados nas redes neurais biológicas presentes no sistema nervoso dos animais.
     Especialmente com o advento de redes neurais profundas e o conceito de aprendizado profundo, este se tornou um importante paradigma dentro do campo de aprendizado de máquina e é amplamente utilizado para resolver uma variedade de problemas atuais.
@@ -132,148 +131,113 @@
     Neste contexto, esta pesquisa buscou estudar teoricamente redes neurais profundas baseado em um livro recente e representativo ~\cite{Goodfellow16} e posteriormente aplicar um modelo específico de rede neural -- a saber uma rede convolucional -- ao problema conhecido de reconhecimento de dígitos escritos à mão utilizando a base de dados MNIST ~\cite{mnist}.
 
     \section*{\begin{tcolorbox}
-        \huge
+        \LARGE
         % \headingfont
         \centering
         Discussões e Resultados
     \end{tcolorbox}}
-    \Large
+    \large
 
-    \subsection*{\LARGE\color{Indigo}MLP}
-
-\begin{figure}[H]
-\centering
-    \begin{tikzpicture}[>=latex']
-        \node[functions] (center) {};
-        \node[below of=center,font=\scriptsize,text width=4em] {activation function};
-        \draw[very thick] (0em,0em) -- (-0.8em,0em);
-        \draw[very thick] (0em,0em) -- (0.70em,0.70em);
-        \draw[very thin] (0em,0.75em) -- (0em,-0.75em);
-        \draw[very thin] (0.75em,0em) -- (-0.75em,0em);
-        \node[right of=center] (right) {};
-            \path[draw,->] (center) -- (right);
-        \node[functions,left=3em of center] (left) {$\sum$};
-            \path[draw,->] (left) -- (center);
-        \node[weights,left=3em of left] (2) {$w_2$} -- (2) node[input,left of=2, left=1em] (l2) {$x_2$};
-            \path[draw,->] (l2) -- (2);
-            \path[draw,->] (2) -- (left);
-        \node[below of=2] (dots) {$\vdots$} -- (dots) node[left of=dots, left=1em] (ldots) {$\vdots$};
-        \node[weights,below of=dots] (n) {$w_n$} -- (n) node[input,left of=n, left=1em] (ln) {$x_n$};
-            \path[draw,->] (ln) -- (n);
-            \path[draw,->] (n) -- (left);
-        \node[weights,above of=2] (1) {$w_1$} -- (1) node[input,left of=1, left=1em] (l1) {$x_1$};
-            \path[draw,->] (l1) -- (1);
-            \path[draw,->] (1) -- (left);
-        \node[weights,above of=1] (0) {$w_0$} -- (0) node[input,left of=0, left=1em] (l0) {$1$};
-            \path[draw,->] (l0) -- (0);
-            \path[draw,->] (0) -- (left);
-        \node[below of=ln,font=\scriptsize] {inputs};
-        \node[below of=n,font=\scriptsize] {weights};
-    \end{tikzpicture}
-    \caption{Neurônio perceptron.}
-\label{fig:perc}\par
-\end{figure}
+    \subsection*{\Large\color{Indigo}Perceptron de Múltiplas Camadas -- MLP}
 
 As redes MLP podem ser vistas como redes de neurônios perceptron interligados em forma de camadas: uma camada de entrada que recebe cada entrada do vetor $\mathbf{x}$, uma ou mais camadas intermediárias e uma camada de saída. Exemplo de uma rede MLP pode ser visto na figura ~\ref{fig:mlp}.
 
   \begin{figure}[H]
         {\centering
-        \includegraphics[width=.6\linewidth]{mlp_ex.png}
-        \caption{Exemplo de rede MLP com 3 atributos de entrada, uma camada intermediária com 5 neurônios e uma camada de saída com um único neurônio, gerado com ~\cite{nnsvg}.}
+        \includegraphics[width=.4\linewidth]{neuron.png}
+        \caption{Neurônio de tipo perceptron.}
         \label{fig:mlp}\par}
   \end{figure}
 
-  Desta forma, matematicamente a saída de uma dessas redes -- considerando $\mathbf{W^n}$ e $f^n$ como respectivamente matriz de pesos e função de ativação da camada n --  é:
+    Desta forma, matematicamente a saída de uma dessas redes -- considerando $\mathbf{w^n}$, $w_0^n$ e $f^n$ como respectivamente matriz de pesos, viés (\em bias\em ) e função de ativação da camada n --  é:
 
-  $$
-  y = f^N(\mathbf{W^N}\cdot ... f^2(\mathbf{W^2}\cdot f^1(\mathbf{W^1} \cdot \mathbf{x} + w_0^1) + w_0^2) + w_0^N)
-  $$
+    \begin{equation}
+  y = f^N(\mathbf{w^N}\cdot ... f^2(\mathbf{w^2}\cdot f^1(\mathbf{w^1} \cdot \mathbf{x} + w_0^1) + w_0^2) + w_0^N)
+    \end{equation}
 
-  Ou ainda se definirmos uma matriz de entrada que admita $M$ exemplos em uma mesma estrutura:
+
+    Ou ainda, se definirmos uma matriz de entrada que admita $M$ exemplos em uma mesma estrutura -- podemos ainda definir um vetor $\mathbf{W}$ que inclua $w_0$ no vetor $\mathbf{w}$ e definir uma matriz $\mathbf{\Phi}$ cuja linha $\mathbf{\phi_{i}} = [1 \quad \mathbf{x_i}]$ com $i$ indicando cada exemplo:
 
 \begin{equation}
     \label{eq:mlp}
   \mathbf{y} = \mathbf{F^n}( ... \mathbf{F^2}(\mathbf{F^1}(\boldsymbol{\Phi} \cdot \mathbf{W^1})\mathbf{W^2})\mathbf{W^N})
 \end{equation}
 
-  Com:
+%   Com:
+% \break\hfill\break
+% $
+% \boldsymbol{\Phi} = \begin{bmatrix}
+%     1 & \mathbf{x_1} \\
+%     1 & \mathbf{x_2} \\
+%     &\vdots \\
+%     1 & \mathbf{x_M}
+% \end{bmatrix}
+% $
+% \hfill
+% $
+% \mathbf{y} =\begin{bmatrix}
+%     y_1 \\
+%     y_2 \\
+%     \vdots \\
+%     y_M
+% \end{bmatrix}
+% $
+% \hfill
+% $
+% \mathbf{{F^n}(u)} = 
+% \begin{bmatrix}
+%   f^n(u_1) & 0 & \cdots  & 0 \\
+%   0 & f^n(u_2) & \cdots  & 0 \\
+%   \vdots   & \vdots & \ddots & \vdots \\
+%   0 & 0 & \cdots  & f^n(u_M) \\
+% \end{bmatrix}
+% $
 
-\hfill
-$
-\mathbf{X} =\begin{bmatrix}
-    \mathbf{x_1} \\
-    \mathbf{x_2} \\
-    \vdots \\
-    \mathbf{x_M}
-\end{bmatrix}
-$
-\hfill
-$
-\boldsymbol{\Phi} = \boldsymbol{\Phi}(\mathbf{X}) = \begin{bmatrix}
-    1 & \mathbf{x_1} \\
-    1 & \mathbf{x_2} \\
-    &\vdots \\
-    1 & \mathbf{x_M}
-\end{bmatrix}
-$
-\hfill
-$
-\mathbf{y} =\begin{bmatrix}
-    y_1 \\
-    y_2 \\
-    \vdots \\
-    y_M
-\end{bmatrix}
-$
-\hfill
-\break
+  \begin{figure}[H]
+        {\centering
+        \includegraphics[width=.45\linewidth]{mlp_ex.png}
+        \caption{Exemplo de rede MLP com 3 atributos de entrada, uma camada intermediária com 5 neurônios e uma camada de saída com um único neurônio, gerado com ~\cite{nnsvg}.}
+        \label{fig:mlp}\par}
+  \end{figure}
 
-$$
-\mathbf{{F^n}(u)} = 
-\begin{bmatrix}
-  f^n(u_1) & 0 & \cdots  & 0 \\
-  0 & f^n(u_2) & \cdots  & 0 \\
-  \vdots   & \vdots & \ddots & \vdots \\
-  0 & 0 & \cdots  & f^n(u_M) \\
-\end{bmatrix}
-$$
-    \subsection*{\LARGE\color{Indigo}CNN}
-    
-\begin{figure}[H]
-    {\centering
-    \begin{tikzpicture}[node distance=10em,auto,>=latex']
-        \node [int] (a) {Convolution};
-        \node [int] (c) [right of=a] {Activation};
-        \node [int] (e) [right of=c] {Pooling};
-        \path[draw,->] (a) -- (c);
-        \path[draw,->] (c) -- (e);
-    \end{tikzpicture}
-    \caption{Etapas de uma camada convolucional.}
-    \label{fig:conv}\par}
-\end{figure}
+    \subsection*{\Large\color{Indigo}Rede Neural Convolucional -- CNN}
 
+ Redes CNN são arquiteturas de ANNs com ao menos uma camada convolucional. Camadas convolucionais usam kernels de pesos e a operação matemática de convolução para gerar a informação de saı́da do neurônio, diferentemente das MLPs que usam o produto interno da entrada com um vetor de pesos.
 
-  Exemplo da operação de convolução entre uma imagem $\mathbf{I}$ 2D e um kernel $\mathbf{K}$~\cite{ia006}:
+  Exemplo da operação de convolução entre uma imagem $\mathbf{I}$ 2D e um kernel $\mathbf{K}$:
 
 \begin{equation}
   (I*K)(i, j) = (K*I)(i,j) = \sum_m\sum_n K(m, n) \cdot I(i-m, j-n)
 \end{equation}
 
-A figura ~\ref{fig:cnn} mostra um exemplo de CNN.
+% \begin{figure}[H]
+%     {\centering
+%     \begin{tikzpicture}[node distance=10em,auto,>=latex']
+%         \node [int] (a) {Convolution};
+%         \node [int] (c) [right of=a] {Activation};
+%         \node [int] (e) [right of=c] {Pooling};
+%         \path[draw,->] (a) -- (c);
+%         \path[draw,->] (c) -- (e);
+%     \end{tikzpicture}
+%     \caption{Etapas de uma camada convolucional.}
+%     \label{fig:conv}\par}
+% \end{figure}
 
   \begin{figure}[H]
         {\centering
-        \includegraphics[width=\linewidth]{cnn_ex.png}
+        \includegraphics[width=.6\linewidth]{cnn_ex.png}
         \caption{Exemplo de rede CNN com 1 camada convolucional - convolução e max-polling - e 2 camadas FC, gerado com ~\cite{nnsvg}.}
         \label{fig:cnn}\par}
   \end{figure}
+
+  Redes MLP e CNN foram implementadas com diferentes configurações para dropout (no caso de ambas as arquiteturas) e quantidade de neurônios nas camadas internas (na arquitetura MLP).
 
   \begin{figure}[H]
         {\centering
         \break\hfill\break
         \break\hfill\break
         \color{Indigo}
-        \textbf{\Large Progressão do erro ao longo das épocas de treinamento.}\par\medskip
+        \textbf{\large Progressão do erro ao longo das épocas de treinamento.}\par\medskip
         \subfloat[Modelo MLP.]{\includegraphics[width=.5\linewidth]{mlp.png}}
         \hfill
         \subfloat[Modelo CNN.]{\includegraphics[width=.5\linewidth]{cnn.png}}
@@ -281,41 +245,54 @@ A figura ~\ref{fig:cnn} mostra um exemplo de CNN.
         \label{fig:lc}\par}
   \end{figure}
 
+O resultado final dos melhores modelos estão na tabela ~\cite{tab:final}.
 
+\vspace{1em}
 
 \begin{table}[H]
 \caption{Modelos finais avaliados no conjunto de teste.}
 \centering
     \label{tab:final}
 \large
-\begin{tabular}{@{}lll@{}}
-\toprule
-    Model \fill & Best Epoch  & \hfill  Best Accuracy \\ \midrule
+% \begin{tabular}{@{}lll@{}}
+% \toprule
+%     Modelo \fill & Melhor Época  & \hfill Melhor Acurácia \\ \midrule
+%     MLP  &         10  & 0.9663   \\
+%     CNN  &          7  & 0.9771   \\ \bottomrule
+% \end{tabular}
+% \end{table}
+
+\begin{tabular}{||c|c|c||}
+    \hline
+    Modelo \fill & Melhor Época  & \hfill Melhor Acurácia \\ \midrule
+    \hline\hline
     MLP  &         10  & 0.9663   \\
-    CNN  &          7  & 0.9771   \\ \bottomrule
+    \hline
+    CNN  &          7  & 0.9771   \\
+    \hline
 \end{tabular}
 \end{table}
     
     \section*{\begin{tcolorbox}
-        \huge
+        \LARGE
         % \headingfont
         \centering
         Conclusões
     \end{tcolorbox}}
-    \Large
+    \large
 
-    O estudo mostrou que tanto a arquitetura MLP como a CNN são viáveis para o problema de classificação de dígitos escritos a mão ~\cite{mnist}. O modelo final de rede convolucional apresentou um resultado ligeiramente melhor -- acurácia de 97.7\% em comparação à 96.6\% referente à MLP.
+    O estudo mostrou que tanto a arquitetura MLP como a CNN são viáveis para o problema de classificação de dígitos escritos a mão ~\cite{mnist}. O modelo final de rede convolucional apresentou um resultado ligeiramente melhor -- acurácia de 97.8\% em comparação à 96.7\% referente à MLP.
 
     O uso de dropout teve pouca influência em ambas as arquiteturas, sendo que nas redes MLP o mesmo contribuiu negativamente para o aumento da acurácia e nas redes CNN um dropout de 30\% foi o que proveu o maior índice. Nas redes MLP a variação do número de neurônios nas camadas intermediárias teve pouca influência o problema pode ser resolvido por modelos mais simples.
 
     
     \section*{\begin{tcolorbox}
-        \huge
+        \LARGE
         % \headingfont
         \centering
         Agradecimentos
     \end{tcolorbox}}
-    \Large
+    \large
 
     O estudante gostaria de expressar seu agradecimento ao programa PIBIC/CNPq/Unicamp pelo auxílio financeiro e em especial à Romis Attux por todo o incentivo e apoio durante o desenvolvimento da pesquisa.
 
@@ -324,7 +301,7 @@ A figura ~\ref{fig:cnn} mostra um exemplo de CNN.
     \noindent
     \rule{.33\linewidth}{2pt}
 
-{\large
+{\normalsize
 \begin{thebibliography}{9}
     \bibitem{Goodfellow16}
         I. Goodfellow, Y. Bengio, A. Courville.
